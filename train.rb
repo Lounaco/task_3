@@ -1,5 +1,4 @@
 lass Train
-
 	attr_reader :number, :type, :carriages, :current_speed, :current_station
 
 	def initialize( number, type, carriages)

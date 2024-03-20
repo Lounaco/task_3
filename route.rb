@@ -1,5 +1,4 @@
 class Route
-
   attr_reader: stations
 	
 	def initialize(start_station, end_station)
