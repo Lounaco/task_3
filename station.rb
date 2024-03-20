@@ -21,7 +21,6 @@ class Station
   def depart_train(train)
     @trains.delete(train)
   end
-  
 end
 
 

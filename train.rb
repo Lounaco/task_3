@@ -52,5 +52,4 @@ lass Train
     @current_station = @route.stations[@current_station_index]
     @current_station.arrive_train(self)
   end
-  
 end
