@@ -1,24 +1,23 @@
-lass Train
-	attr_reader :number, :type, :carriages, :current_speed, :current_station
+сlass Train
+  attr_reader :number, :type, :carriages, :current_speed, :current_station
 
-	def initialize( number, type, carriages)
-		@number = number
-		@type = type
-		@carriages = carriages
-		@current_speed = 0
-		@current_station_index = nil
-	end
+  def initialize( number, type, carriages)
+    @number = number
+    @type = type
+    @carriages = carriages
+    @current_speed = 0
+    @current_station_index = nil
+  end
 	
-	def speed_up(number)
+  def speed_up(number)
     @current_speed += number
   end
 
   def brake(number)
     while @current_speed > 0
       @current_speed -= number
-
       @current_speed = 0 if @current_speed < 0
-    end  
+  end  
 
   def add_carriage
     @carriages += 1 if @current_speed = 0
