@@ -1,5 +1,8 @@
+require_relative 'train.rb'
+require_relative 'station.rb'
+
 class Route
-  attr_reader: stations
+  attr_reader :stations
 	
   def initialize(start_station, end_station)
     @stations = [start_station, end_station]
@@ -10,11 +13,12 @@ class Route
   end
 
   def remove_station(station)
-    if station != @stations.first && station != @stations.last
+    if @station != @stations.first && station != @stations.last
       stations.delete(station)
+    end
   end	
 
   def show_stations
-    puts "Stations on the route:" @station.each { |station| puts station.name }
-  end	
-end	
+    puts "Stations on the route:" @station.each { |station| puts @station.name }
+  end
+end
