@@ -91,5 +91,90 @@ class Main
     selected_train.assign_route(selected_route)
   end
 
+  # xxx
   def add_carriage_to_train
+    puts "Choose a train to add a carriage:"
+    @trains.each_with_index { |train, index| puts "#{index + 1}. #{train}" }
+    train_index = gets.chomp.to_i - 1
+    selected_train = @trains[train_index]
+
+    if selected_train.is_a?(PassengerTrain)
+      selected_train.add_carriage(PassengerCarriage.new)
+    elsif selected_train.is_a?(CargoTrain)
+      selected_train.add_carriage(CargoCarriage.new)
+    else
+      puts "Invalid train type."
+    end
   end
+
+  def remove_carriage_from_train
+    puts "Choose a train to remove a carriage from:"
+    @trains.each_with_index { |train, index| puts "#{index + 1}. #{train}" }
+    train_index = gets.chomp.to_i - 1
+    selected_train = @trains[train_index]
+    selected_train.remove_carriage
+  end
+
+  def move_train_forward
+    puts "Choose a train to move forward:"
+    @trains.each_with_index { |train, index| puts "#{index + 1}. #{train}" }
+    train_index = gets.chomp.to_i - 1
+    selected_train = @trains[train_index]
+    selected_train.move_forward
+  end
+
+  def move_train_backward
+    puts "Choose a train to move backward:"
+    @trains.each_with_index { |train, index| puts "#{index + 1}. #{train}" }
+    train_index = gets.chomp.to_i - 1
+    selected_train = @trains[train_index]
+    selected_train.move_backward
+  end
+
+  def display_stations_and_trains
+    @stations.each do |station|
+      puts "Station: #{station.name}"
+      puts "Trains at the station:"
+      station.trains.each { |train| puts "- #{train}" }
+      puts ""
+    end
+  end
+
+  def start_program
+    loop do
+      puts "Choose an option:"
+      puts "1. Create a station"
+      puts "2. Create a train"
+      puts "3. Create a route"
+      puts "4. Manage stations in a route"
+      puts "5. Assign a route to a train"
+      puts "6. Add a carriage to a train"
+      puts "7. Remove a carriage from a train"
+      puts "8. Move a train forward"
+      puts "9. Move a train backward"
+      puts "10. Display stations and trains"
+      puts "11. Exit"
+
+      choice = gets.chomp.to_i
+
+      case choice
+      when 1 then create_station
+      when 2 then create_train
+      when 3 then create_route
+      when 4 then manage_route
+      when 5 then assign_route_to_train
+      when 6 then add_carriage_to_train
+      when 7 then remove_carriage_from_train
+      when 8 then move_train_forward
+      when 9 then move_train_backward
+      when 10 then display_stations_and_trains
+      when 11 then break
+      else
+        puts "Invalid choice. Please try again."
+      end
+    end
+  end
+end
+
+main_program = Main.new
+main_program.start_program
