@@ -1,10 +1,10 @@
-require_relative 'route.rb'
-require_relative 'train.rb'
-require_relative 'station.rb'
-require_relative 'passenger_train.rb'
+require_relative 'route'
+require_relative 'train'
+require_relative 'station'
+require_relative 'passenger_train'
 require_relative 'cargo_train.rb'
-require_relative 'passenger_carriage.rb'
-require_relative 'cargo_carriage.rb'
+require_relative 'passenger_carriage'
+require_relative 'cargo_carriage'
 
 class Main
   def initialize
@@ -12,6 +12,8 @@ class Main
     @trains = []
     @routes = []
   end
+
+protected
 
   def create_station
     puts "Enter the name of the station"
@@ -33,7 +35,7 @@ class Main
       @trains << CargoTrain.new(number)
       puts "Cargo train #{number} has been created."
     else
-      Puts "Invalid train type."
+      puts "Invalid train type."
     end
   end
 
@@ -61,7 +63,7 @@ class Main
     selected_route = @routes[route_index]
 
     puts "Choose an action (1 - Add station, 2 - Remove station):"
-    action = gets.chomp/.to_i
+    action = gets.chomp.to_i
 
     if action == 1
       puts "Enter the name of the station to add:"
@@ -133,12 +135,14 @@ class Main
 
   def display_stations_and_trains
     @stations.each do |station|
-      puts "Station: #{station.name}"
+      puts "Station: #{station.name} "
       puts "Trains at the station:"
-      station.trains.each { |train| puts "- #{train}" }
+      station.trains.each { |train| puts "- #{train} " }
       puts ""
     end
   end
+
+public
 
   def start_program
     loop do

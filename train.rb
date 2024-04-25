@@ -1,9 +1,9 @@
-require_relative 'station.rb'
-require_relative 'route.rb'
-require_relative 'passenger_carriages.rb'
-require_relative 'cargo_carriages.rb'
-require_relative 'cargo_train.rb'
-require_relative 'passenger_train.rb'
+require_relative 'station'
+require_relative 'route'
+require_relative 'passenger_carriages'
+require_relative 'cargo_carriages'
+require_relative 'cargo_train'
+require_relative 'passenger_train'
 
 class Train
   attr_reader :number, :type, :carriages, :current_speed, :current_station
