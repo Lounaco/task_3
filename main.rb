@@ -13,8 +13,6 @@ class Main
     @routes = []
   end
 
-protected
-
   def create_station
     puts "Enter the name of the station"
     name = gets.chomp
@@ -93,7 +91,8 @@ protected
     selected_train.assign_route(selected_route)
   end
 
-  # xxx
+private
+  # меня терзают смутные сомненья, я бы поставила протектед, но здесь уже прописаны все настройки по пассажирскому/грузовому 
   def add_carriage_to_train
     puts "Choose a train to add a carriage:"
     @trains.each_with_index { |train, index| puts "#{index + 1}. #{train}" }
@@ -116,6 +115,9 @@ protected
     selected_train = @trains[train_index]
     selected_train.remove_carriage
   end
+
+protected
+# Ниже-методы перемещения поезда должны быть защищены, так как нечего там лазить извне, но можно в в подклассах (пассажирский и грузовой поезда)
 
   def move_train_forward
     puts "Choose a train to move forward:"
@@ -143,6 +145,7 @@ protected
   end
 
 public
+# Ниже-публичный метод, запускает основной цикл программы.
 
   def start_program
     loop do

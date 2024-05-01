@@ -66,3 +66,5 @@ end
     @current_station.arrive_train(self)
   end
 end
+
+# Здесь все паблик, так как на каждый метод нужна возможность вызывть извне.
