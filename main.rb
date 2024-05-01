@@ -2,7 +2,7 @@ require_relative 'route'
 require_relative 'train'
 require_relative 'station'
 require_relative 'passenger_train'
-require_relative 'cargo_train.rb'
+require_relative 'cargo_train'
 require_relative 'passenger_carriage'
 require_relative 'cargo_carriage'
 
@@ -132,17 +132,22 @@ protected
     @trains.each_with_index { |train, index| puts "#{index + 1}. #{train}" }
     train_index = gets.chomp.to_i - 1
     selected_train = @trains[train_index]
-    selected_train.move_backward
+  
+    if selected_train.is_a?(Train)
+      selected_train.move_backward
+  else
+    puts "Selected object is not a Train."
+    end
   end
 
   def display_stations_and_trains
     @stations.each do |station|
-      puts "Station: #{station.name} "
+      puts "Station: #{station.name}"
       puts "Trains at the station:"
-      station.trains.each { |train| puts "- #{train} " }
+      station.trains.each { |train| puts "- #{train}" }
       puts ""
-    end
   end
+end
 
 public
 # Ниже-публичный метод, запускает основной цикл программы.
