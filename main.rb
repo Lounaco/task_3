@@ -28,8 +28,8 @@ class Main
 
     case type
     when 1
-    @trains<<PassengerTrain.new(number, type)
-    puts "Passenger train #{number} has been created."
+      @trains << PassengerTrain.new(number, type)
+      puts "Passenger train #{number} has been created."
     when 2
       @trains << CargoTrain.new(number, type)
       puts "Cargo train #{number} has been created."
@@ -41,19 +41,29 @@ class Main
   def create_route
     puts "Enter the name of the starting station:"
     start_station_name = gets.chomp
-    start_station = @stations.find {|station| station.name == start_station_name}
+    start_station = @stations.find { |station| station.name.casecmp(start_station_name).zero? }
 
     puts "Enter the name of the ending station:"
     end_station_name = gets.chomp
-    end_station = @stations.find {|station| station.name == end_station_name}
+    end_station = @stations.find { |station| station.name.casecmp(end_station_name).zero? }
 
-    if start_station && end_station_name
-      @routes << Route.new(start_station, end_station)
-      puts "Route from #{start_station_name} to #{end_station_name} has been created."
+    puts "All stations:"
+    @stations.each { |station| puts station.name }
+
+    if start_station && end_station
+      if start_station != end_station
+        @routes << Route.new(start_station, end_station)
+        puts "Route from #{start_station.name} to #{end_station.name} has been created."
+      else
+        puts "Starting and ending stations cannot be the same."
+      end
     else
       puts "Station not found."
+      # puts "All stations:"
+      # @stations.each { |station| puts station.name }
     end
   end
+
 
   def manage_route
     puts "Choose a route:"

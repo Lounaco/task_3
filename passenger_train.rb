@@ -1,8 +1,8 @@
 require_relative 'train'
 
 class PassengerTrain < Train
-  def initialize(number)
-    super(number)
+  def initialize(number, type)
+    super(number, type)
     @type = :Passenger
   end
 end
