@@ -1,10 +1,10 @@
-require_relative 'route'
-require_relative 'train'
 require_relative 'station'
+require_relative 'train'
+require_relative 'route'
 require_relative 'passenger_train'
 require_relative 'cargo_train'
-require_relative 'passenger_carriage'
-require_relative 'cargo_carriage'
+require_relative 'passenger_carriages'
+require_relative 'cargo_carriages'
 
 class Main
   def initialize
@@ -26,11 +26,12 @@ class Main
     puts "Choose the type of the train (1-Pasenger, 2-Cargo):"
     type = gets.chomp.to_i
 
-  if type == 1
-    @trains<<PassengerTrain.new(number)
+    case type
+    when 1
+    @trains<<PassengerTrain.new(number, type)
     puts "Passenger train #{number} has been created."
-    elsif type == 2
-      @trains << CargoTrain.new(number)
+    when 2
+      @trains << CargoTrain.new(number, type)
       puts "Cargo train #{number} has been created."
     else
       puts "Invalid train type."
@@ -91,7 +92,6 @@ class Main
     selected_train.assign_route(selected_route)
   end
 
-private
   # меня терзают смутные сомненья, я бы поставила протектед, но здесь уже прописаны все настройки по пассажирскому/грузовому 
   def add_carriage_to_train
     puts "Choose a train to add a carriage:"
@@ -146,8 +146,8 @@ protected
       puts "Trains at the station:"
       station.trains.each { |train| puts "- #{train}" }
       puts ""
+    end
   end
-end
 
 public
 # Ниже-публичный метод, запускает основной цикл программы.
