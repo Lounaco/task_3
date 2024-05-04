@@ -16,7 +16,8 @@ class Main
   def create_station
     puts "Enter the name of the station"
     name = gets.chomp
-    @stations<<Station.new(name)
+    station = Station.new(name)
+  @stations << station
     puts "Station #{name} has been created."
   end
 
@@ -40,15 +41,12 @@ class Main
 
   def create_route
     puts "Enter the name of the starting station:"
-    start_station_name = gets.chomp
-    start_station = @stations.find { |station| station.name.casecmp(start_station_name).zero? }
+    start_station_name = gets.chomp.downcase
+    start_station = @stations.find { |station| station.name.downcase == start_station_name }
 
     puts "Enter the name of the ending station:"
-    end_station_name = gets.chomp
-    end_station = @stations.find { |station| station.name.casecmp(end_station_name).zero? }
-
-    puts "All stations:"
-    @stations.each { |station| puts station.name }
+    end_station_name = gets.chomp.downcase
+    end_station = @stations.find { |station| station.name.downcase == end_station_name }
 
     if start_station && end_station
       if start_station != end_station
@@ -58,9 +56,12 @@ class Main
         puts "Starting and ending stations cannot be the same."
       end
     else
-      puts "Station not found."
-      # puts "All stations:"
-      # @stations.each { |station| puts station.name }
+      if start_station.nil?
+        puts "Starting station not found."
+      end
+      if end_station.nil?
+        puts "Ending station not found."
+      end
     end
   end
 
@@ -88,7 +89,7 @@ class Main
     end
   end
 
-  def assing_route_to_train
+  def assign_route_to_train
     puts "Choose a train to assign a route:"
     @trains.each_with_index {|train, index| puts "#{index + 1}. #{train}" }
     train_index = gets.chomp.to_i - 1
