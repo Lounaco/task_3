@@ -17,7 +17,7 @@ class Main
     puts "Enter the name of the station"
     name = gets.chomp
     station = Station.new(name)
-  @stations << station
+    @stations << station
     puts "Station #{name} has been created."
   end
 
@@ -68,26 +68,40 @@ class Main
 
   def manage_route
     puts "Choose a route:"
-    @routes.each_with_index {|route, index| puts "#{index +1}. #{route}" }
+    @routes.each_with_index { |route, index| puts "#{index + 1}. #{route}" }
     route_index = gets.chomp.to_i - 1
-    selected_route = @routes[route_index]
 
-    puts "Choose an action (1 - Add station, 2 - Remove station):"
-    action = gets.chomp.to_i
+    if route_index >= 0 && route_index < @routes.length
+      selected_route = @routes[route_index]
 
-    if action == 1
-      puts "Enter the name of the station to add:"
-      station_name = gets.chomp
-      station = @stations.find {|station| station.name == station_name}
-      selected_route.add_station(station) if station
-    elsif action == 2
-      puts "Enter the name of the station to remove:"
-      station_name = gets.chomp
-      selected_route.remove_station(station_name)
+      puts "Choose an action (1 - Add station, 2 - Remove station):"
+      action = gets.chomp.to_i
+
+      case action
+      when 1
+        puts "Enter the name of the station to add:"
+        station_name = gets.chomp
+        station = @stations.find { |station| station.name == station_name }
+
+        if station
+          selected_route.add_station(station)
+          puts "#{station_name} added to the route."
+        else
+          puts "Station not found."
+        end
+      when 2
+        puts "Enter the name of the station to remove:"
+        station_name = gets.chomp
+        selected_route.remove_station(station_name)
+        puts "#{station_name} removed from the route."
+      else
+        puts "Invalid action."
+      end
     else
-      puts "Invalid action."
+      puts "Invalid route index."
     end
   end
+
 
   def assign_route_to_train
     puts "Choose a train to assign a route:"
@@ -201,3 +215,4 @@ end
 
 main_program = Main.new
 main_program.start_program
+
