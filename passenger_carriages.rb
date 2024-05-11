@@ -2,7 +2,7 @@
 # require_relative 'passenger_train'
 # require_relative 'main'
 
-class PassangerCarriage
+class PassengerCarriage
   attr_accessor :type
   
   def initialize

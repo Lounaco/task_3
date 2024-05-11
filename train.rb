@@ -17,28 +17,24 @@ class Train
   end
 	
   def speed_up(number)
-    @current_speed += number
+    @current_speed += number if number.positive?
   end
 
   def brake(number)
-    while @current_speed > 0
-      @current_speed -= number
-      @current_speed = 0 if @current_speed < 0
-    end
+    @current_speed -= number until @current_speed <= 0
+    @current_speed = 0
   end
 
   def add_carriage(carriage)
-  if @current_speed == 0
-    if self.is_a?(PassengerTrain) && carriage.is_a?(PassengerCarriage)
-      @carriages << carriage
-    elsif self.is_a?(CargoTrain) && carriage.is_a?(CargoCarriage)
-      @carriages << carriage
+    if @current_speed.zero? && !@carriages.include?(carriage)
+      if (self.is_a?(PassengerTrain) && carriage.is_a?(PassengerCarriage)) || (self.is_a?(CargoTrain) && carriage.is_a?(CargoCarriage))
+        @carriages << carriage
+      end
     end
   end
-end
 
   def remove_carriage
-    @carriages -= 1 if @current_speed == 0 
+    @carriages.pop if @current_speed.zero? && !@carriages.empty?
   end
 
   def assign_route(route)

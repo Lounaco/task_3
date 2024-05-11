@@ -147,9 +147,15 @@ protected
   def move_train_forward
     puts "Choose a train to move forward:"
     @trains.each_with_index { |train, index| puts "#{index + 1}. #{train}" }
+  
     train_index = gets.chomp.to_i - 1
-    selected_train = @trains[train_index]
-    selected_train.move_forward
+  
+    if train_index >= 0 && train_index < @trains.length
+      selected_train = @trains[train_index]
+      selected_train.move_forward
+    else
+      puts "Invalid train selection. Please choose a valid train."
+    end
   end
 
   def move_train_backward
