@@ -4,11 +4,19 @@
 # require_relative 'passenger_train'
 
 class Station
+  include InstanceCounter
+  @@stations = []
+
+  def self.all
+    @@stations
+  end  
+
   attr_reader :name, :trains
 
   def initialize(name)
     @name = name
     @trains = []
+    @@stations << self
   end
 
   def arrive_train(train)

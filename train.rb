@@ -6,7 +6,16 @@
 # require_relative 'passenger_train'
 
 class Train
+  include Manufacturer
+  include InstanceCounter
+
   attr_reader :number, :type, :carriages, :current_speed, :current_station
+
+  @@trains = []
+
+  def self.find(number)
+    @@trains.find { |train| train.number == number }
+  end
 
   def initialize(number, type)
     @number = number
@@ -14,6 +23,7 @@ class Train
     @carriages = []
     @current_speed = 0
     @current_station_index = nil
+    @@trains << self
   end
 	
   def speed_up(number)

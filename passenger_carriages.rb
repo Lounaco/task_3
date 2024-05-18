@@ -3,6 +3,8 @@
 # require_relative 'main'
 
 class PassengerCarriage
+  include Manufacturer
+  
   attr_accessor :type
   
   def initialize
