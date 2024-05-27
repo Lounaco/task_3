@@ -2,7 +2,7 @@
 # require_relative 'route'
 # require_relative 'cargo_train'
 # require_relative 'passenger_train'
-
+require_relative 'instance_counter.rb'
 class Station
   include InstanceCounter
   @@stations = []
