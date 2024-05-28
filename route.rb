@@ -1,6 +1,3 @@
-# require_relative 'train'
-# require_relative 'station'
-
 class Route
   include InstanceCounter
   
