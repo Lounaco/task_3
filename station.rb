@@ -1,6 +1,8 @@
 require_relative 'instance_counter.rb'
+
 class Station
   include InstanceCounter
+
   @@stations = []
 
   def self.all
@@ -12,6 +14,7 @@ class Station
   def initialize(name)
     @name = name
     @trains = []
+    validate!
     @@stations << self
   end
 
@@ -29,5 +32,20 @@ class Station
 
   def depart_train(train)
     @trains.delete(train)
+  end
+
+  def valid?
+    validate!
+    true
+  rescue
+    false
+  end
+
+
+  private
+
+  def validate!
+    raise 'Name cannot be nil' if @name.nil?
+    raise 'Name must be at least 3 characters long' if @name.length < 3
   end
 end

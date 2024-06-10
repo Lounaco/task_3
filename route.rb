@@ -5,7 +5,7 @@ class Route
 	
   def initialize(start_station, end_station)
     @stations = [start_station, end_station]
-    validate_data
+    validate!
   end
 
   def add_station(station) 
@@ -18,25 +18,21 @@ class Route
     end
   end	
 
-  def show_stations
-    puts "Stations on the route:"
-    @station.each { |station| puts station.name }
-  end
-
   def valid?
-    validate_data
+    validate!
+    true
+  rescue
+    false
   end
 
   private
 
-  def validate_data
-    raise "Route must have at least two stations"
-unless @stations.size >= 2
-    raise "Start and end stations must be different"
-if @stations.first == @stations.last
-
-    true
-  end     
+  def validate!
+    raise 'Start station cannot be nil' if @start_station.nil?
+    raise 'End station cannot be nil' if @end_station.nil?
+    raise 'Start and end stations must be different' if @start_station == @end_station
+  end
+  
 end
 
 

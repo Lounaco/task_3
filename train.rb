@@ -19,6 +19,7 @@ class Train
     @carriages = []
     @current_speed = 0
     @current_station_index = nil
+    validate!
     @@trains << self
   end
 	
@@ -67,6 +68,21 @@ class Train
     @current_station = @route.stations[@current_station_index]
     @current_station.arrive_train(self)
   end
-end
 
-# Здесь все паблик, так как на каждый метод нужна возможность вызывть извне.
+
+  def valid?
+    validate!
+    true
+  rescue
+    false
+  end
+
+  private
+
+  def validate!
+    raise 'Number cannot be nil' if @number.nil?
+    raise 'Type cannot be nil' if @type.nil?
+    raise 'Number has invalid format' unless @number =~ /^[a-zA-Z0-9]{3}-?[a-zA-Z0-9]{2}$/i
+    raise 'Type is invalid' unless ['passenger', 'cargo'].include?(@type)
+  end
+end

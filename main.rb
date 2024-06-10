@@ -94,12 +94,8 @@ class Main
         station_name = gets.chomp
         selected_route.remove_station(station_name)
         puts "#{station_name} removed from the route."
-      else
-        puts "Invalid action."
       end
-    else
-      puts "Invalid route index."
-    end
+    end      
   end
 
 
@@ -128,8 +124,6 @@ class Main
       selected_train.add_carriage(PassengerCarriage.new)
     elsif selected_train.is_a?(CargoTrain)
       selected_train.add_carriage(CargoCarriage.new)
-    else
-      puts "Invalid train type."
     end
   end
 
