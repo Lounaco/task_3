@@ -5,4 +5,5 @@ class CargoTrain < Train
     super(number, type)
     @type = :Cargo
   end
+
 end
