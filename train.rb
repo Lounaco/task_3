@@ -83,6 +83,5 @@ class Train
     raise 'Number cannot be nil' if @number.nil?
     raise 'Type cannot be nil' if @type.nil?
     raise 'Number has invalid format' unless @number =~ /^[a-zA-Z0-9]{3}-?[a-zA-Z0-9]{2}$/i
-    raise 'Type is invalid' unless ['passenger', 'cargo'].include?(@type)
   end
 end

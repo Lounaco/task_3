@@ -28,9 +28,9 @@ class Route
   private
 
   def validate!
-    raise 'Start station cannot be nil' if @start_station.nil?
-    raise 'End station cannot be nil' if @end_station.nil?
-    raise 'Start and end stations must be different' if @start_station == @end_station
+    raise 'Start station cannot be nil' if @stations.first.nil?
+    raise 'End station cannot be nil' if @stations.last.nil?
+    raise 'Start and end stations must be different' if @stations.first == @stations.last
   end
   
 end
