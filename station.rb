@@ -1,7 +1,9 @@
 require_relative 'instance_counter.rb'
+require_relative 'validatable'
 
 class Station
   include InstanceCounter
+  include Validatable
 
   @@stations = []
 
@@ -33,14 +35,7 @@ class Station
   def depart_train(train)
     @trains.delete(train)
   end
-
-  def valid?
-    validate!
-    true
-  rescue
-    false
-  end
-
+  
 
   private
 

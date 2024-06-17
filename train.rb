@@ -1,9 +1,11 @@
 require_relative 'manufacturer'
 require_relative 'instance_counter'
+require_relative 'validatable'
 
 class Train
   include Manufacturer
   include InstanceCounter
+  include Validatable
 
   attr_reader :number, :type, :carriages, :current_speed, :current_station
 
@@ -69,13 +71,6 @@ class Train
     @current_station.arrive_train(self)
   end
 
-
-  def valid?
-    validate!
-    true
-  rescue
-    false
-  end
 
   private
 

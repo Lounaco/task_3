@@ -1,5 +1,8 @@
+require_relative 'validatable'
+
 class Route
   include InstanceCounter
+  include Validatable
   
   attr_reader :stations
 	
@@ -18,12 +21,6 @@ class Route
     end
   end	
 
-  def valid?
-    validate!
-    true
-  rescue
-    false
-  end
 
   private
 
