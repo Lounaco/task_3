@@ -3,7 +3,7 @@
 class PassengerCarriage
   include Manufacturer
   
-  attr_accessor :type, :total_seats, :occupied_seats
+  attr_accessor :total_seats, :occupied_seats
   
   def initialize(total_seats)
     @type = :passanger_carriage

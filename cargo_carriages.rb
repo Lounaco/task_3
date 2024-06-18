@@ -2,7 +2,7 @@
 class CargoCarriage
   include Manufacturer
   
-  attr_accessor :type, total_volume, :occupied_volume
+  attr_accessor :total_volume, :occupied_volume
   
   def initialize(total_volume)
     @type = :cargo_carriage

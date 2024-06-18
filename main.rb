@@ -144,11 +144,15 @@ class Main
       selected_train = @trains[train_index]
 
       if selected_train.is_a?(PassengerTrain)
-        selected_train.add_carriage(PassengerCarriage.new)
-        puts "Passenger carriage added."
+        puts "Enter the number of seats in the passenger carriage:"
+        seats = gets.chomp.to_i
+        selected_train.add_carriage(PassengerCarriage.new(seats))
+        puts "Passenger carriage with #{seats} seats added."
       elsif selected_train.is_a?(CargoTrain)
-        selected_train.add_carriage(CargoCarriage.new)
-        puts "Cargo carriage added."
+        puts "Enter the total volume of the cargo carriage:"
+        volume = gets.chomp.to_i
+        selected_train.add_carriage(CargoCarriage.new(volume))
+        puts "Cargo carriage with #{volume} volume added."
       else
         raise "Invalid train type."
       end
@@ -173,6 +177,46 @@ class Main
       retry
     end
   end
+
+  def occupy_seat_or_volume
+    begin
+      puts "Choose a train to occupy seat or volume:"
+      @trains.each_with_index { |train, index| puts "#{index + 1}. #{train.number}" }
+      train_index = gets.chomp.to_i - 1
+      raise "Invalid train selection." unless train_index.between?(0, @trains.length - 1)
+
+      selected_train = @trains[train_index]
+
+      puts "Choose a carriage number:"
+      selected_train.each_carriage.with_index(1) do |carriage, index|
+        if carriage.is_a?(PassengerCarriage)
+          puts "#{index}. Carriage type: Passenger, Free seats: #{carriage.free_seats}"
+        elsif carriage.is_a?(CargoCarriage)
+          puts "#{index}. Carriage type: Cargo, Free volume: #{carriage.free_volume}"
+        end
+      end
+      carriage_index = gets.chomp.to_i - 1
+      raise "Invalid carriage selection." unless carriage_index.between?(0, selected_train.carriages.length - 1)
+
+      selected_carriage = selected_train.carriages[carriage_index]
+
+      if selected_carriage.is_a?(PassengerCarriage)
+        selected_carriage.occupy_seat
+        puts "Seat occupied. Free seats: #{selected_carriage.free_seats}"
+      elsif selected_carriage.is_a?(CargoCarriage)
+        puts "Enter the volume to occupy:"
+        volume = gets.chomp.to_i
+        selected_carriage.occupy_volume(volume)
+        puts "Volume occupied. Free volume: #{selected_carriage.free_volume}"
+      else
+        raise "Invalid carriage type."
+      end
+    rescue StandardError => e
+      puts "Error: #{e.message}"
+      retry
+    end
+  end
+
 
 protected
 # Ниже-методы перемещения поезда должны быть защищены, так как нечего там лазить извне, но можно в в подклассах (пассажирский и грузовой поезда)
@@ -213,7 +257,16 @@ protected
     @stations.each do |station|
       puts "Station: #{station.name}"
       puts "Trains at the station:"
-      station.trains.each { |train| puts "- #{train.number} (#{train.class.name})" }
+      station.trains.each do |train|
+        puts "- #{train.number} (#{train.class.name}), Carriages: #{train.carriages.length}"
+        train.carriages.each_with_index do |carriage, index|
+          if carriage.is_a?(PassengerCarriage)
+            puts "  Carriage #{index + 1}: Passenger, Free seats: #{carriage.free_seats_count}, Occupied seats: #{carriage.occupied_seats}"
+          elsif carriage.is_a?(CargoCarriage)
+            puts "  Carriage #{index + 1}: Cargo, Free volume: #{carriage.free_volume_count}, Occupied volume: #{carriage.occupied_volume}"
+          end
+        end
+      end
       puts ""
     end
   end
@@ -234,7 +287,8 @@ public
       puts "8. Move a train forward"
       puts "9. Move a train backward"
       puts "10. Display stations and trains"
-      puts "11. Exit"
+      puts "11. Occupy seat or volume in a carriage"
+      puts "12. Exit"
 
       choice = gets.chomp.to_i
 
@@ -249,7 +303,8 @@ public
       when 8 then move_train_forward
       when 9 then move_train_backward
       when 10 then display_stations_and_trains
-      when 11 then break
+      when 11 then occupy_seat_or_volume
+      when 12 then break
       else
         puts "Invalid choice. Please try again."
       end

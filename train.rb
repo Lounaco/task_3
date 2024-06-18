@@ -71,8 +71,23 @@ class Train
     @current_station.arrive_train(self)
   end
 
+  def each_carriage
+    @carriages.each { |carriage| yield(carriage) } if block_given?
+  end  
 
   private
+
+  def current_station
+    @route.stations[@current_station_index] if @route
+  end
+
+  def next_station
+    @route.stations[@current_station_index + 1] if @route && @current_station_index < @route.stations.size - 1
+  end
+
+  def previous_station
+    @route.stations[@current_station_index - 1] if @route && @current_station_index > 0
+  end
 
   def validate!
     raise 'Number cannot be nil' if @number.nil?
