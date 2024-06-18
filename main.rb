@@ -180,37 +180,55 @@ class Main
 
   def occupy_seat_or_volume
     begin
+      if @trains.empty?
+        puts "No trains available."
+        return
+      end
+
       puts "Choose a train to occupy seat or volume:"
       @trains.each_with_index { |train, index| puts "#{index + 1}. #{train.number}" }
       train_index = gets.chomp.to_i - 1
-      raise "Invalid train selection." unless train_index.between?(0, @trains.length - 1)
+
+      if train_index < 0 || train_index >= @trains.length
+        raise "Invalid train selection."
+      end
 
       selected_train = @trains[train_index]
 
+      if selected_train.carriages.empty?
+        puts "Selected train has no carriages."
+        return
+      end
+
       puts "Choose a carriage number:"
-      selected_train.each_carriage.with_index(1) do |carriage, index|
+      selected_train.carriages.each_with_index do |carriage, index|
         if carriage.is_a?(PassengerCarriage)
-          puts "#{index}. Carriage type: Passenger, Free seats: #{carriage.free_seats}"
+          puts "#{index + 1}. Carriage type: Passenger, Free seats: #{carriage.free_seats_count}"
         elsif carriage.is_a?(CargoCarriage)
-          puts "#{index}. Carriage type: Cargo, Free volume: #{carriage.free_volume}"
+          puts "#{index + 1}. Carriage type: Cargo, Free volume: #{carriage.free_volume_count}"
         end
       end
+
       carriage_index = gets.chomp.to_i - 1
-      raise "Invalid carriage selection." unless carriage_index.between?(0, selected_train.carriages.length - 1)
+
+      if carriage_index < 0 || carriage_index >= selected_train.carriages.length
+        raise "Invalid carriage selection."
+      end
 
       selected_carriage = selected_train.carriages[carriage_index]
 
       if selected_carriage.is_a?(PassengerCarriage)
         selected_carriage.occupy_seat
-        puts "Seat occupied. Free seats: #{selected_carriage.free_seats}"
+        puts "Seat occupied. Free seats: #{selected_carriage.free_seats_count}"
       elsif selected_carriage.is_a?(CargoCarriage)
         puts "Enter the volume to occupy:"
         volume = gets.chomp.to_i
         selected_carriage.occupy_volume(volume)
-        puts "Volume occupied. Free volume: #{selected_carriage.free_volume}"
+        puts "Volume occupied. Free volume: #{selected_carriage.free_volume_count}"
       else
         raise "Invalid carriage type."
       end
+
     rescue StandardError => e
       puts "Error: #{e.message}"
       retry
