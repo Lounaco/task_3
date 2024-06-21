@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require_relative 'manufacturer'
 require_relative 'instance_counter'
 require_relative 'validatable'
 
+# Class representing a train
 class Train
   include Manufacturer
   include InstanceCounter
@@ -24,7 +27,7 @@ class Train
     validate!
     @@trains << self
   end
-	
+
   def speed_up(number)
     @current_speed += number if number.positive?
   end
@@ -73,7 +76,7 @@ class Train
 
   def each_carriage
     @carriages.each { |carriage| yield(carriage) } if block_given?
-  end  
+  end
 
   private
 

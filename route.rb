@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'validatable'
 
 class Route
@@ -21,7 +23,6 @@ class Route
     end
   end	
 
-
   private
 
   def validate!
@@ -29,7 +30,4 @@ class Route
     raise 'End station cannot be nil' if @stations.last.nil?
     raise 'Start and end stations must be different' if @stations.first == @stations.last
   end
-  
 end
-
-

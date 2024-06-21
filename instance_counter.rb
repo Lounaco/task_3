@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
+# The InstanceCounter module provides functionality for tracking the number of class instances.
 module InstanceCounter
   def self.included(base)
     base.extend ClassMethods
     base.include InstanceMethods
 
-    base.instance_variable_set("@instances", 0)
+    base.instance_variable_set('@instances', 0)
   end
 
   module ClassMethods

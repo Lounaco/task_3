@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'instance_counter.rb'
 require_relative 'validatable'
 
@@ -40,7 +42,6 @@ class Station
     @trains.each { |train| yield(train) }
   end  
   
-
   private
 
   def validate!

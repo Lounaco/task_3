@@ -1,9 +1,11 @@
+# frozen_string_literal: true
 
+# Class representing a cargo carriage
 class CargoCarriage
   include Manufacturer
-  
+
   attr_accessor :total_volume, :occupied_volume
-  
+
   def initialize(total_volume)
     @type = :cargo_carriage
     @total_volume = total_volume
@@ -14,7 +16,7 @@ class CargoCarriage
     if @occupied_volume + volume <= @total_volume
       @occupied_volume += volume
     else
-      puts "Not enough avaliable volume."
+      puts 'Not enough avaliable volume.'
     end
   end
 
@@ -24,6 +26,5 @@ class CargoCarriage
 
   def free_volume_count
     @total_volume - @occupied_volume
-  end  
-
+  end
 end
