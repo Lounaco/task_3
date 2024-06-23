@@ -48,15 +48,15 @@ class Station
   end
 
   # Iterates over each train at the station, yielding to the given block
-  def each_train
-    @trains.each { |train| yield(train) }
+  def each_train(&block)
+    @trains.each(&block)
   end
-  
+
   private
 
   # Validates the station's name
   def validate!
-    raise "Name cannot be nil" if @name.nil?
-    raise "Name must be at least 3 characters long" if @name.length < 3
+    raise 'Name cannot be nil' if @name.nil?
+    raise 'Name must be at least 3 characters long' if @name.length < 3
   end
 end

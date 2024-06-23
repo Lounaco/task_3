@@ -23,17 +23,17 @@ class Route
 
   # Removes a station from the route, ensuring it is not the start or end station
   def remove_station(station)
-    if station != @stations.first && station != @stations.last
-      @stations.delete(station)
-    end
+    return unless station != @stations.first && station != @stations.last
+
+    @stations.delete(station)
   end
 
   private
 
   # Validates the route's stations
   def validate!
-    raise "Start station cannot be nil" if @stations.first.nil?
-    raise "End station cannot be nil" if @stations.last.nil?
-    raise "Start and end stations must be different" if @stations.first == @stations.last
+    raise 'Start station cannot be nil' if @stations.first.nil?
+    raise 'End station cannot be nil' if @stations.last.nil?
+    raise 'Start and end stations must be different' if @stations.first == @stations.last
   end
 end

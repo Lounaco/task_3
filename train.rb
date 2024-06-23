@@ -44,11 +44,8 @@ class Train
 
   # Adds a carriage to the train if it is stopped and the carriage type matches the train type
   def add_carriage(carriage)
-    if @current_speed.zero? && !@carriages.include?(carriage)
-      if (self.is_a?(PassengerTrain) && carriage.is_a?(PassengerCarriage)) || (self.is_a?(CargoTrain) && carriage.is_a?(CargoCarriage))
+    return unless @current_speed.zero? && !@carriages.include?(carriage) && ((is_a?(PassengerTrain) && carriage.is_a?(PassengerCarriage)) || (is_a?(CargoTrain) && carriage.is_a?(CargoCarriage)))
         @carriages << carriage
-      end
-    end
   end
 
   # Removes the last carriage from the train if it is stopped
@@ -85,8 +82,8 @@ class Train
   end
 
   # Iterates over each carriage in the train, yielding to the given block
-  def each_carriage
-    @carriages.each { |carriage| yield(carriage) } if block_given?
+  def each_carriage(&block)
+    @carriages.each(&block) if block_given?
   end
 
   private
@@ -108,8 +105,8 @@ class Train
 
   # Validates the train's attributes
   def validate!
-    raise "Number cannot be nil" if @number.nil?
-    raise "Type cannot be nil" if @type.nil?
-    raise "Number has invalid format" unless @number =~ /^[a-zA-Z0-9]{3}-?[a-zA-Z0-9]{2}$/i
+    raise 'Number cannot be nil' if @number.nil?
+    raise 'Type cannot be nil' if @type.nil?
+    raise 'Number has invalid format' unless @number =~ /^[a-zA-Z0-9]{3}-?[a-zA-Z0-9]{2}$/i
   end
 end

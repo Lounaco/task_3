@@ -22,7 +22,7 @@ class PassengerCarriage
     if @occupied_seats < @total_seats
       @occupied_seats += 1
     else
-      puts "All seats are occupied"
+      puts 'All seats are occupied'
     end
   end
 

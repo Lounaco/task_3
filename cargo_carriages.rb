@@ -22,13 +22,13 @@ class CargoCarriage
     if @occupied_volume + volume <= @total_volume
       @occupied_volume += volume
     else
-      puts "Not enough avaliable volume."
+      puts 'Not enough avaliable volume.'
     end
   end
 
   # Method to return the current occupied volume
   def occupied_volume_count
-      @occupied_volume
+    @occupied_volume
   end
 
   # Method to return the current free volume
