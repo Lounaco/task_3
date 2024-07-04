@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
-require_relative 'validatable'
+require_relative 'validation'
 
 # Class representing a route consisting of multiple stations
 class Route
   include InstanceCounter
-  include Validatable
+  include Validation
 
   attr_reader :stations
+
+  validate :name, :presence
+  validate :name, :format, /\A[A-Z][a-zA-Z0-9\s]*\z/
+  validate :name, :type, String
 
   # Initializes a new route with a start and end station
   # Validates the route upon creation
@@ -32,8 +36,6 @@ class Route
 
   # Validates the route's stations
   def validate!
-    raise 'Start station cannot be nil' if @stations.first.nil?
-    raise 'End station cannot be nil' if @stations.last.nil?
     raise 'Start and end stations must be different' if @stations.first == @stations.last
   end
 end

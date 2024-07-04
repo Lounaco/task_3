@@ -15,7 +15,6 @@ module InstanceCounter
 
   # Module for class-level methods
   module ClassMethods
-    # Returns the number of instances of the class
     def instances
       @instances
     end

@@ -2,17 +2,25 @@
 
 require_relative 'manufacturer'
 require_relative 'instance_counter'
-require_relative 'validatable'
+require_relative 'validation'
+require_relative 'accessors'
 
 # Class representing a train
 class Train
   include Manufacturer
   include InstanceCounter
-  include Validatable
+  include Validation
+  extend Accessors
 
-  attr_reader :number, :type, :carriages, :current_speed, :current_station
+  attr_accessor_with_history :number, :speed
+  strong_attr_accessor :type, String
+
+  attr_reader :carriages, :current_speed, :current_station
 
   @@trains = []
+
+  validate :number, :presence
+  validate :name, :format, /\A[A-Z][a-zA-Z0-9\s]*\z/
 
   # Class method to find a train by its number
   def self.find(number)
@@ -27,8 +35,8 @@ class Train
     @carriages = []
     @current_speed = 0
     @current_station_index = nil
-    validate!
     @@trains << self
+    validate!
   end
 
   # Increases the train's speed by the given number
@@ -103,10 +111,4 @@ class Train
     @route.stations[@current_station_index - 1] if @route && @current_station_index > 0
   end
 
-  # Validates the train's attributes
-  def validate!
-    raise 'Number cannot be nil' if @number.nil?
-    raise 'Type cannot be nil' if @type.nil?
-    raise 'Number has invalid format' unless @number =~ /^[a-zA-Z0-9]{3}-?[a-zA-Z0-9]{2}$/i
-  end
 end

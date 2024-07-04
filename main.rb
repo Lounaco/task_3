@@ -7,7 +7,8 @@ require_relative 'passenger_train'
 require_relative 'cargo_train'
 require_relative 'passenger_carriages'
 require_relative 'cargo_carriages'
-require_relative 'validatable'
+require_relative 'validation'
+require_relative 'accessors'
 
 # Main class to handle the railway system operations
 class Main
@@ -49,6 +50,7 @@ class Main
       @trains << CargoTrain.new(number, type)
       puts "Cargo train #{number} has been created."
     end
+
   rescue StandardError => e
     puts "Error: #{e.message}"
     retry
@@ -223,6 +225,19 @@ class Main
     retry
   end
 
+  # Display history of attributes for a train
+  def display_train_history(number)
+      train = Train.find(number)
+      if train
+        puts "Train #{train.number} history:"
+        puts "Number: #{train.number_history}"
+        puts "Type: #{train.type_history}" if train.respond_to?(:type_history)
+        puts "Speed: #{train.speed_history}" if train.respond_to?(:speed_history)
+      else
+        puts "Train with number #{number} not found."
+      end
+    end
+
   protected
 
   # Methods to move train should be protected
@@ -293,7 +308,8 @@ class Main
       puts '9. Move a train backward'
       puts '10. Display stations and trains'
       puts '11. Occupy seat or volume in a carriage'
-      puts '12. Exit'
+      puts '12. Display history of attributes for a train'
+      puts '13. Exit'
 
       choice = gets.chomp.to_i
 
@@ -309,7 +325,11 @@ class Main
       when 9 then move_train_backward
       when 10 then display_stations_and_trains
       when 11 then occupy_seat_or_volume
-      when 12 then break
+      when 12 
+        puts 'Enter the number of the train to display history:'
+        train_number = gets.chomp
+        display_train_history(train_number)
+      when 13 then break
       else
         puts 'Invalid choice. Please try again.'
       end
