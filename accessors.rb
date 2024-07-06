@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Module to add extra functionality, such as history tracking and type checking, to attribute accessors in classes
 module Accessors
   # Method to define getters, setters, and history tracking for attributes
   def attr_accessor_with_history(*attrs)

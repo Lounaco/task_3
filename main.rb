@@ -33,27 +33,33 @@ class Main
   end
 
   # Method to create a new train
-  def create_train
-    puts 'Enter the number of the train:'
-    number = gets.chomp
-    raise 'Train number cannot be empty.' if number.empty?
+   def create_train
+    begin
+      puts 'Enter the number of the train:'
+      number = gets.chomp
+      raise 'Train number is invalid. It should be in format XXX-XX.' unless number.match?(/^\w{3}-?\w{2}$/)
+    rescue StandardError => e
+      puts "Error: #{e.message}"
+      retry
+    end
 
     puts 'Choose the type of the train (1-Passenger, 2-Cargo):'
     type = gets.chomp.to_i
     raise 'Invalid train type.' unless [1, 2].include?(type)
 
-    case type
-    when 1
-      @trains << PassengerTrain.new(number, type)
-      puts "Passenger train #{number} has been created."
-    when 2
-      @trains << CargoTrain.new(number, type)
-      puts "Cargo train #{number} has been created."
+    begin
+      case type
+      when 1
+        @trains << PassengerTrain.new(number, 'passenger')
+        puts "Passenger train #{number} has been created."
+      when 2
+        @trains << CargoTrain.new(number, 'cargo')
+        puts "Cargo train #{number} has been created."
+      end
+    rescue StandardError => e
+      puts "Error: #{e.message}"
+      retry
     end
-
-  rescue StandardError => e
-    puts "Error: #{e.message}"
-    retry
   end
 
   # Method to create a new route

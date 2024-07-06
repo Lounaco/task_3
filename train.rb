@@ -19,8 +19,10 @@ class Train
 
   @@trains = []
 
+  NUMBER_FORMAT = /^[a-z\d]{3,}$/i.freeze
+
   validate :number, :presence
-  validate :name, :format, /\A[A-Z][a-zA-Z0-9\s]*\z/
+  validate :number, :format, NUMBER_FORMAT
 
   # Class method to find a train by its number
   def self.find(number)
@@ -35,19 +37,19 @@ class Train
     @carriages = []
     @current_speed = 0
     @current_station_index = nil
-    @@trains << self
     validate!
+    @@trains << self
   end
 
   # Increases the train's speed by the given number
-  def speed_up(number)
-    @current_speed += number if number.positive?
+  def speed_up(amount)
+    @current_speed += amount if amount.positive?
   end
 
   # Reduces the train's speed by the given number until it stops
-  def brake(number)
-    @current_speed -= number until @current_speed <= 0
-    @current_speed = 0
+  def brake(amount)
+    @current_speed -= amount if amount.positive?
+    @current_speed = 0 if @current_speed.negative?
   end
 
   # Adds a carriage to the train if it is stopped and the carriage type matches the train type

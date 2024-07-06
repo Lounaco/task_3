@@ -1,5 +1,5 @@
-# frozen_string_literal
 GEM
+  remote: https://rubygems.org/
   specs:
     ast (2.4.2)
     json (2.6.1)
